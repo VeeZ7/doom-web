@@ -20,16 +20,16 @@
 <div id="screen"></div>
 
 <script type="module">
-  import { Dos } from "https://github.com/VeeZ7/doom-web/raw/refs/heads/main/jsapi.mjs";
+  import { Dos } from "https://veez7.github.io/doom-web/jsapi.mjs";
 
   const dos = await Dos(document.getElementById("screen"), {
-    wasmUrl: "https://github.com/VeeZ7/doom-web/raw/refs/heads/main/jsapi.wasm"
+    wasmUrl: "https://veez7.github.io/doom-web/jsapi.wasm"
   });
 
   await dos.run("doom.exe", {
     mount: [
-      ["doom.exe", "https://github.com/VeeZ7/doom-web/raw/refs/heads/main/doom.exe"],
-      ["doom.wad", "https://github.com/VeeZ7/doom-web/raw/refs/heads/main/doom.wad"]
+      ["doom.exe", "https://veez7.github.io/doom-web/doom.exe"],
+      ["doom.wad", "https://veez7.github.io/doom-web/doom.wad"]
     ]
   });
 </script>
