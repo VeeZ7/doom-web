@@ -4,33 +4,37 @@
   <meta charset="UTF-8">
   <title>Doom Web</title>
   <style>
-    body {
-      margin: 0;
-      background: black;
-      overflow: hidden;
-    }
-    #screen {
-      width: 100vw;
-      height: 100vh;
-    }
+    body { margin: 0; background: black; overflow: hidden; }
+    #screen { width: 100vw; height: 100vh; }
   </style>
+  <script src="https://js-dos.com/6.22/current/js-dos.js"></script>
 </head>
 <body>
 
 <div id="screen"></div>
 
-<script type="module">
-  import { Dos } from "https://veez7.github.io/doom-web/jsapi.mjs";
+<script>
+  Dos(document.getElementById("screen"), {
+    wdosboxUrl: "https://js-dos.com/6.22/current/wdosbox.js"
+  }).ready(function (fs, main) {
 
-  const dos = await Dos(document.getElementById("screen"), {
-    wasmUrl: "https://veez7.github.io/doom-web/jsapi.wasm"
-  });
+    console.log("Loading DOOM files...");
 
-  await dos.run("doom.exe", {
-    mount: [
-      ["doom.exe", "https://veez7.github.io/doom-web/doom.exe"],
-      ["doom.wad", "https://veez7.github.io/doom-web/doom.wad"]
-    ]
+    Promise.all([
+      fetch("https://veez7.github.io/doom-web/doom.exe").then(r => r.arrayBuffer()),
+      fetch("https://veez7.github.io/doom-web/doom.wad").then(r => r.arrayBuffer())
+    ])
+    .then(([exe, wad]) => {
+      console.log("Files loaded. Mounting...");
+
+      fs.createFile("doom.exe", new Uint8Array(exe));
+      fs.createFile("doom.wad", new Uint8Array(wad));
+
+      console.log("Running doom.exe...");
+      main(["doom.exe"]);
+    })
+    .catch(err => console.error("Error loading DOOM files:", err));
+
   });
 </script>
 
