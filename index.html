@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Doom Web</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+    }
+    #screen {
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+<div id="screen"></div>
+
+<script type="module">
+  import { Dos } from "https://github.com/VeeZ7/doom-web/raw/refs/heads/main/jsapi.mjs";
+
+  const dos = await Dos(document.getElementById("screen"), {
+    wasmUrl: "https://github.com/VeeZ7/doom-web/raw/refs/heads/main/jsapi.wasm"
+  });
+
+  await dos.run("doom.exe", {
+    mount: [
+      ["doom.exe", "https://github.com/VeeZ7/doom-web/raw/refs/heads/main/doom.exe"],
+      ["doom.wad", "https://github.com/VeeZ7/doom-web/raw/refs/heads/main/doom.wad"]
+    ]
+  });
+</script>
+
+</body>
+</html>
