@@ -7,35 +7,18 @@
     body { margin: 0; background: black; overflow: hidden; }
     #screen { width: 100vw; height: 100vh; }
   </style>
+
+  <!-- JS-DOS 6.22 -->
   <script src="https://js-dos.com/6.22/current/js-dos.js"></script>
 </head>
-<body>
 
+<body>
 <div id="screen"></div>
 
 <script>
   Dos(document.getElementById("screen"), {
-    wdosboxUrl: "https://js-dos.com/6.22/current/wdosbox.js"
-  }).ready(function (fs, main) {
-
-    console.log("Loading DOOM files...");
-
-    Promise.all([
-      fetch("https://veez7.github.io/doom-web/doom.exe").then(r => r.arrayBuffer()),
-      fetch("https://veez7.github.io/doom-web/doom.wad").then(r => r.arrayBuffer())
-    ])
-    .then(([exe, wad]) => {
-      console.log("Files loaded. Mounting...");
-
-      fs.createFile("doom.exe", new Uint8Array(exe));
-      fs.createFile("doom.wad", new Uint8Array(wad));
-
-      console.log("Running doom.exe...");
-      main(["doom.exe"]);
-    })
-    .catch(err => console.error("Error loading DOOM files:", err));
-
-  });
+      wdosboxUrl: "https://js-dos.com/6.22/current/wdosbox.js"
+  }).run("doom.zip");
 </script>
 
 </body>
